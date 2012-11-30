@@ -27,8 +27,7 @@ class VerilogWriter(HDLWriter.HDLWriter):
 			self.outfile.write("inout")
 			self.writenetcommon(Name,Start,End)
 		elif IOType == HDLIOType.Wire:
-			Dev.Debug(Dev.Info,"VerilogWriter.WriteNet(self,Name,IOType,Type,Start,End) -
-			Skipping I/O Definition (Wire)")
+			Dev.Debug(Dev.Info,"VerilogWriter.WriteNet(self,Name,IOType,Type,Start,End) - Skipping I/O Definition (Wire)")
 		else:
 			Dev.Debug(Dev.Stop,"Error: Unknown HDLIOType")
 		if Type == HDLNetType.Wire:

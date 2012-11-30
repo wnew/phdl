@@ -65,8 +65,7 @@ class Project:
 			TmpComponents = self.ChangedComponents.values()
 			iterations += 1
 			if iterations > 50:
-				Dev.Debug(Dev.Stop,"Project needs more than 50 iterations to solve
-					please check that there are no bugs.")
+				Dev.Debug(Dev.Stop, "Project needs more than 50 iterations to solve please check that there are no bugs.")
 		Dev.EnableWarnings()
 		self.MainComponentInstance.AddBindings(self)
 		self.MainComponentInstance.ParameterizationCheck(self)
@@ -97,8 +96,8 @@ class Project:
 		# Generate top component
 		if self.MultipleFiles == 1:
 			hdlwriter.Open(self.MainComponentInstance.Name + ".v") # language dep
-		if self.Name != "":
-			hdlwriter.Write("// Main Component: "+self.Name+" Project\n\n")
+			if self.Name != "":
+				hdlwriter.Write("// Main Component: "+self.Name+" Project\n\n")
 		hdlwriter.WriteModule(self.MainComponentInstance)
 		if self.MultipleFiles == 1:
 			hdlwriter.Close()
@@ -121,11 +120,11 @@ class Project:
 		Dev.Debug(Dev.Info,"Project.AddChangedConnector(self,conn)")
 		self.AddChangedComponent(conn.Comp)
 		if not(conn.Conn is None):
-		for k, v in conn.Conn.Connectors.iteritems():
-		self.AddChangedComponent(v.Comp);
+			for k, v in conn.Conn.Connectors.iteritems():
+				self.AddChangedComponent(v.Comp);
 		if not(conn.LocalConn is None):
-		for k, v in conn.LocalConn.Connectors.iteritems():
-		self.AddChangedComponent(v.Comp);
+			for k, v in conn.LocalConn.Connectors.iteritems():
+				self.AddChangedComponent(v.Comp);
 
 	def GenerateComponentTypeName(self):
 		Dev.Debug(Dev.Info,"Project.GenerateComponentTypeName(self)")

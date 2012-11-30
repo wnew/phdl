@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-__all__ = [ "Component", "ComponentImpl", "Connector", "Dev", "HDLIOType", "HDLNetType",
-"HDLWriter", "Project", "Util", "VerilogWriter" ]
+__all__ = [ "Component", "ComponentImpl", "Connector", "Dev", "HDLIOType", "HDLNetType", "HDLWriter", "Project", "Util", "VerilogWriter" ]
+
 # Here I define all special functions like Connect
 import math
+
 """
 This is probably the most complicated single function it takes
 care of all the special cases of tieing two connectors together.

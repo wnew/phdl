@@ -14,13 +14,16 @@ class Connector(object):
 		self.Comp = None
 		self.IsUsed = 0
 		self.Anonymous = 0
+
 	# *PUBLIC* Optional method called after a connector is attached to a component
 	def LateInit(self):
 		return
+
 	# *PUBLIC* Overload how namespaces work so we can clean syntax
 	def __setattr__(self,attr,val):
 		Dev.Debug(Dev.Info,"Connector.__setattr__(self,attr,val)")
 		self.__dict__[attr] = val
+
 	# *PUBLIC* Overload how namespaces work so we can clean syntax
 	def __getattr__(self,attr):
 		Dev.Debug(Dev.Info,"Connector.__getattr__(self,attr)")
@@ -29,6 +32,7 @@ class Connector(object):
 		else:
 			Dev.Debug(Dev.Stop,"Unknown attribute: " + attr)
 			return None
+
 	# *INTERNAL* Choose a common parent!
 	def ChooseCommonParent(self,b):
 		if isinstance(b,int):
@@ -45,6 +49,7 @@ class Connector(object):
 			return self.Comp.Parent
 		else:
 			Dev.Debug(Dev.Stop,"No common parent between wires!")
+
 	# *PUBLIC* Add operator
 	def __add__(self,b):
 		adder = Components.Adder.Adder()
@@ -55,6 +60,7 @@ class Connector(object):
 		self.ChooseCommonParent(b).Anonymous = mywire
 		Connect(mywire,adder.o)
 		return mywire# the return value is an anonymous wire
+
 	# *PUBLIC* Sub operator
 	def __sub__(self,b):
 		subtractor = Components.Sub.Sub()
@@ -65,6 +71,7 @@ class Connector(object):
 		self.ChooseCommonParent(b).Anonymous = mywire
 		Connect(mywire,subtractor.o).SetAnonymous()
 		return mywire# the return value is an anonymous wire
+
 	# *PUBLIC Or operator
 	def __or__(self,b):
 		orgate = Components.Or.Or()
@@ -75,6 +82,7 @@ class Connector(object):
 		self.ChooseCommonParent(b).Anonymous = mywire
 		Connect(mywire,orgate.o).SetAnonymous()
 		return mywire# the return value is an anonymous wire
+
 	# *PUBLIC And operator
 	def __and__(self,b):
 		andgate = Components.And.And()
@@ -85,6 +93,7 @@ class Connector(object):
 		self.ChooseCommonParent(b).Anonymous = mywire
 		Connect(mywire,andgate.o).SetAnonymous()
 		return mywire# the return value is an anonymous wire
+
 	# *PUBLIC Xor operator
 	def __xor__(self,b):
 		xorgate = Components.Xor.Xor()
@@ -95,12 +104,15 @@ class Connector(object):
 		self.ChooseCommonParent(b).Anonymous = mywire
 		Connect(mywire,xorgate.o).SetAnonymous()
 		return mywire# the return value is an anonymous wire
+
 	# Do something intelligent with shift/rotate constant -> subwire
 	# otherwise instantiate a component
+
 	# *PUBLIC* Set name of a connector
 	def SetName(self,str):
 		Dev.Debug(Dev.Info,"Connector.SetName(self,str)")
 		self.Name = str;
+
 	# *PUBLIC* Configure an IO Port
 	def ConfigureConnector(self,prj):
 		Dev.Debug(Dev.Info,"Connector.ConfigureConnector(self,prj)")
@@ -114,24 +126,31 @@ class Connector(object):
 		if not(self.LocalConn is None):
 			for k,v in self.LocalConn.Connectors.iteritems(): # Check type?
 				self.ConfigureEachOther(prj,v)
+
 	# *PUBLIC* Exchange parameters between two connectors
 	def ConfigureEachOther(self,prj,v):
 		Dev.Debug(Dev.Info,"Connector.ConfigureEachOther(self,prj,v)")
+
 	# *PUBLIC* Check the configuration just before code generation
 	def ParameterizationCheck(self,prj):
 		Dev.Debug(Dev.Info,"Connector.ParameterizationCheck(self,prj)")
+
 	# *INTERNAL* Write IO Port input/output/wire/reg definitions
 	def WriteIOPorts(self,hdlwriter):
 		Dev.Debug(Dev.Info,"Connector.WriteIOPorts(self,hdlwriter)")
+
 	# *INTERNAL* Write IO Port names in a comma seperated list
 	def WriteIOPortNames(self,hdlwriter):
 		Dev.Debug(Dev.Info,"Connector.WriteIOPortNames(self,hdlwriter)")
+
 	# *INTERNAL* Write IO Port bindings to another module
 	def WriteIOPortBindings(self,hdlwriter):
 		Dev.Debug(Dev.Info,"Connector.WriteIOPortBindings(self,hdlwriter)")
+
 	# *INTERNAL* Writes local IO Port logic to the current module
 	def WriteIOPortLogic(self,hdlwriter):
 		Dev.Debug(Dev.Info,"Connector.WriteIOPortLogic(self,hdlwriter)")
+
 	# *INTERNAL* Returns binding name string
 	def WriteIOPortBindingName(self,relparent = None):
 		Dev.Debug(Dev.Info,"Connector.WriteIOPortBindingName(self,hdlwriter)")
@@ -140,23 +159,27 @@ class Connector(object):
 		elif (relparent is self.Comp.Parent):
 			if (self.Conn is None) or (self.Conn.LocalConnector is None):
 				print self.Name
-				Dev.Debug(Dev.Stop,
-				"PANIC: Trying to write a binding for an unconnected connector!")
-		return self.Conn.LocalConnector.Name
+				Dev.Debug(Dev.Stop,	
+					"PANIC: Trying to write a binding for an unconnected connector!")
+			return self.Conn.LocalConnector.Name
+
 	# *INTERNAL* Sets the parent connector
 	def Connect(self,conn):
 		Dev.Debug(Dev.Info,"Connector.Connect(self,conn)")
 		self.Conn = conn
+
 	# *INTERNAL* Sets the local connector
 	def SetLocalConnection(self,conn):
 		Dev.Debug(Dev.Info,"Connector.SetLocalConnection(self,conn)")
 		self.LocalConn = conn
+
 	# *PUBLIC* Mark a connector as used to avoid warning messages
 	# Fools us into thinking its connected
 	def SetUsed(self):
 		Dev.Debug(Dev.Info,"Connector.SetUsed(self)")
 		self.IsUsed = 1
 		return self
+
 	# *PUBLIC* Checks if a connector is connected
 	def IsConnected(self):
 		Dev.Debug(Dev.Info,"Connector.IsConnected(self)")
@@ -164,17 +187,21 @@ class Connector(object):
 			return 0
 		else:
 			return 1
+
 	# *PUBLIC* Removes a connector from a module
 	def Remove(self):
 		self.Comp.__delattr__(self.Name)
+
 	# *PUBLIC* Sets a connector’s anonymous flag
 	def SetAnonymous(self):
 		self.Anonymous = 1
 		return self
+
 	# *PUBLIC* Returns the connector’s anonymous flag
 	def IsAnonymous(self):
 		return self.Anonymous
+
 	# *INTERNAL* Duplicates a connector to create a local wire of the same type
 	def Duplicate(self):
-		Dev.Debug(Dev.Error,"Error: Connector does not implement the
-		Duplicate method you cannot use anonymous connections.")
+		Dev.Debug(Dev.Error, 
+			"Error: Connector does not implement the Duplicate method you cannot use anonymous connections.")
