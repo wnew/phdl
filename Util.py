@@ -11,7 +11,7 @@ def VerilogBinary(number,width = None):
 		printwidth = width
 	if (printwidth == 0):
 		printwidth = printwidth + 1
-	retstr = str(printwidth) + "’b"
+	retstr = str(printwidth) + "'b"
 	for x in range(printwidth):
 		retstr += str(number >> (printwidth - 1 - x) & 1)
 	return retstr

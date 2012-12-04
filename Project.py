@@ -54,8 +54,7 @@ class Project:
 		self.MainComponentInstance.AddBindings(self)
 		TmpComponents = self.UnconfiguredComponents
 		while len(TmpComponents) != 0:
-			print "Iteration " + str(iterations) + ": " + str(len(TmpComponents)) +
-				" Changed Components"
+			print "Iteration " + str(iterations) + ": " + str(len(TmpComponents)) + " Changed Components"
 			self.ChangedComponents.clear()
 			# - Add all components to the change list
 			for c in TmpComponents:

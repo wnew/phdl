@@ -163,8 +163,7 @@ class Component(object):
 				else:
 					return retvalue
 			else:
-				return
-					self.Components[splitcomponentname[0]].GetSubcomponent(splitcomponentname[1])
+				return self.Components[splitcomponentname[0]].GetSubcomponent(splitcomponentname[1])
 		else:
 			return None
 

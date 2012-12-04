@@ -2,7 +2,7 @@
 # PHDL Connector
 
 import Dev
-import Components
+import Component
 import HDLIOType
 
 class Connector(object):
@@ -192,12 +192,12 @@ class Connector(object):
 	def Remove(self):
 		self.Comp.__delattr__(self.Name)
 
-	# *PUBLIC* Sets a connector’s anonymous flag
+	# *PUBLIC* Sets a connector's anonymous flag
 	def SetAnonymous(self):
 		self.Anonymous = 1
 		return self
 
-	# *PUBLIC* Returns the connector’s anonymous flag
+	# *PUBLIC* Returns the connector's anonymous flag
 	def IsAnonymous(self):
 		return self.Anonymous
 

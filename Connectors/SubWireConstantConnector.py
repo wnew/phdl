@@ -103,8 +103,7 @@ class SubWireConnector(Connector.Connector):
 			if (self.Width == 1):
 				return self.Parent.Conn.LocalConnector.Name + "[" + str(self.Start) + "]"
 			else:
-				return self.Parent.Conn.LocalConnector.Name + "[" + str(self.Start) + ":" +
-					str(self.End) + "]"
+				return self.Parent.Conn.LocalConnector.Name + "[" + str(self.Start) + ":" + str(self.End) + "]"
 
 	def Duplicate(self):
 		Dev.Debug(Dev.Info,"WireConnector.Duplicate(self)")
